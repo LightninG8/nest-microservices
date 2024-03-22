@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { RegisterDto } from './auth.controller';
 import { UserRepository } from '../user/repositories/user.repository';
 import { UserRole } from '@purple/interfaces';
 import { UserEntity } from '../user/entities/user.entity';
 import { JwtService } from '@nestjs/jwt';
+import { AccountRegister } from '@purple/contracts';
 
 @Injectable()
 export class AuthService {
@@ -12,7 +12,7 @@ export class AuthService {
     private readonly jwtService: JwtService
   ) {}
 
-  async register({ email, password, displayName }: RegisterDto) {
+  async register({ email, password, displayName }: AccountRegister.Request) {
     const oldUser = await this.userRepository.findUser(email);
 
     if (oldUser) {
